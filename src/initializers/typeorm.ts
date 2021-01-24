@@ -39,5 +39,6 @@ export class TypeORMInitializer extends Initializer {
     });
     const queryRunner = connection.createQueryRunner();
     await queryRunner.createDatabase(dbName, true);
+    await connection.close();
   }
 }
