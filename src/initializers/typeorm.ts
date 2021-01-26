@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { Connection, createConnection } from "typeorm";
 import { api, config, Initializer } from "actionhero";
+import { PluginLogger } from "../utils/pluginLogger";
 
 declare module "actionhero" {
   export interface Api {
@@ -18,7 +19,10 @@ export class TypeORMInitializer extends Initializer {
 
   async initialize(): Promise<void> {
     await this.createDatabaseIfNoExist(config.typeorm.autoCreateDB);
-    api.typeORM = await createConnection(config.typeorm);
+    api.typeORM = await createConnection({
+      ...config.typeorm,
+      logger: new PluginLogger(config.typeorm.loggingLevels),
+    });
   }
 
   async stop(): Promise<void> {

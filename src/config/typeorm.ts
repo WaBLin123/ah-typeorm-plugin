@@ -1,12 +1,43 @@
 import { ConnectionOptions } from "typeorm";
+import { PluginLogger } from "../utils/pluginLogger";
 
+interface ActionheroConfigOption {
+  _toExpand?: boolean;
+}
+
+type AhLoggingLevel =
+  | "emerg"
+  | "alert"
+  | "crit"
+  | "error"
+  | "warning"
+  | "notice"
+  | "info"
+  | "debug";
 interface PluginOption {
   autoCreateDB: boolean;
+  loggingLevels: {
+    logQuery: AhLoggingLevel;
+    logQueryError: AhLoggingLevel;
+    logQuerySlow: AhLoggingLevel;
+    logSchemaBuild: AhLoggingLevel;
+    logMigration: AhLoggingLevel;
+    log: {
+      logLevel: AhLoggingLevel;
+      infoLevel: AhLoggingLevel;
+      warnLevel: AhLoggingLevel;
+    };
+  };
 }
 const databaseName = "ah_typeorm";
 export const DEFAULT = {
-  typeorm: (config: any): ConnectionOptions & PluginOption => {
+  typeorm: (
+    config: any
+  ): ConnectionOptions & PluginOption & ActionheroConfigOption => {
     return {
+      // to prevent actionhero resolve function when merge config
+      _toExpand: false,
+
       // TypeORM Connection Options ref: https://typeorm.io/#/connection-options/
       type: "mysql", // Database type. This option is required
       host: process.env.DB_HOST || "127.0.0.1", // Database host
@@ -24,12 +55,26 @@ export const DEFAULT = {
       entities: ["src/entity/**/*.ts"], // Entities, or Entity Schemas, to be loaded and used for this connection.
       migrations: ["src/migration/**/*.ts"], // Migrations to be loaded and used for this connection.
       subscribers: ["src/subscriber/**/*.ts"], // Subscribers to be loaded and used for this connection.
-      // TODO: plugin logger
+      logger: "advanced-console",
+      logging: true,
 
       // Plugin Custom Options
       // should create database when database does not exist
       // only support specific databases ex: MySQL SQLServer Oracle MariaDB
       autoCreateDB: false,
+      // plugin default logger's logging level
+      loggingLevels: {
+        logQuery: "debug",
+        logQueryError: "error",
+        logQuerySlow: "warning",
+        logSchemaBuild: "info",
+        logMigration: "info",
+        log: {
+          logLevel: "info",
+          infoLevel: "debug",
+          warnLevel: "warning",
+        },
+      },
     };
   },
 };

@@ -3,5 +3,4 @@ node_modules
 .vscode
 log
 pids
-
-./public/javascript/*
+public
