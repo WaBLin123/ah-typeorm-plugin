@@ -23,7 +23,7 @@ export class TypeORMInitializer extends Initializer {
       logger: new PluginLogger(config.typeorm.loggingLevels), // plugin default logger
       ...config.typeorm,
     });
-    api.typeORM.connection = connection;
+    api.typeORM = { connection };
     await this.validationQuery();
   }
 
