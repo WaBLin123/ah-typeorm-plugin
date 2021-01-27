@@ -1,11 +1,11 @@
 import "reflect-metadata";
-import { Connection, createConnection } from "typeorm";
+import { Connection, ConnectionOptions, createConnection } from "typeorm";
 import { api, config, Initializer } from "actionhero";
 import { PluginLogger } from "../utils/pluginLogger";
 
 declare module "actionhero" {
   export interface Api {
-    typeORM: Connection;
+    typeORM: { connection: Connection };
   }
 }
 
@@ -19,14 +19,16 @@ export class TypeORMInitializer extends Initializer {
 
   async initialize(): Promise<void> {
     await this.createDatabaseIfNoExist(config.typeorm.autoCreateDB);
-    api.typeORM = await createConnection({
+    const connection = await createConnection({
+      logger: new PluginLogger(config.typeorm.loggingLevels), // plugin default logger
       ...config.typeorm,
-      logger: new PluginLogger(config.typeorm.loggingLevels),
     });
+    api.typeORM.connection = connection;
+    await this.validationQuery();
   }
 
   async stop(): Promise<void> {
-    await api.typeORM.close();
+    await api.typeORM.connection.close();
   }
 
   private async createDatabaseIfNoExist(toCreate?: boolean): Promise<void> {
@@ -44,5 +46,20 @@ export class TypeORMInitializer extends Initializer {
     const queryRunner = connection.createQueryRunner();
     await queryRunner.createDatabase(dbName, true);
     await connection.close();
+  }
+
+  // validation query when connected specific database type
+  // ref: https://stackoverflow.com/questions/3668506/efficient-sql-test-query-or-validation-query-that-will-work-across-all-or-most
+  private async validationQuery(): Promise<void> {
+    const dialect = config.typeorm.type as ConnectionOptions["type"];
+    let sql = "";
+    if (["mysql", "mariadb", "postgres", "sqlite", "mssql"].includes(dialect)) {
+      sql = "SELECT 1";
+    }
+    if (dialect === "oracle") {
+      sql = "SELECT 1 FROM DUAL";
+    }
+    const queryRunner = api.typeORM.connection.createQueryRunner();
+    await queryRunner.query(sql);
   }
 }

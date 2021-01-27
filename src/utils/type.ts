@@ -9,14 +9,8 @@ export type AhLoggingLevel =
   | "info"
   | "debug";
 export interface PluginOption {
-  autoCreateDB?: boolean;
-  loggingLevels?: {
-    logQuery: AhLoggingLevel;
-    logQueryError: AhLoggingLevel;
-    logQuerySlow: AhLoggingLevel;
-    logSchemaBuild: AhLoggingLevel;
-    logMigration: AhLoggingLevel;
-  };
+  autoCreateDB: boolean;
+  loggingLevels: LoggingLevels;
 }
 
 export interface LoggingLevels {
