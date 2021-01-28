@@ -59,7 +59,7 @@ export const DEFAULT = {
       // Plugin Custom Options
       // should create database when database does not exist
       // only support specific databases ex: MySQL SQLServer Oracle MariaDB
-      autoCreateDB: false,
+      autoCreateDB: true,
       // plugin default logger's logging level
       loggingLevels: {
         logQuery: "debug",

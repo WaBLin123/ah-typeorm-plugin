@@ -1,7 +1,7 @@
 const path = require("path");
 
 export const DEFAULT = {
-  general: (config) => {
+  general: (config: any) => {
     return {
       paths: {
         action: [path.join(__dirname, "..", "actions")],
