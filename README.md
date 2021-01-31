@@ -1,11 +1,9 @@
 # ah-typeorm-plugin
 
-<div style="display: flex;justify-content: center;align-items=center;">
-  <img src="https://github.com/typeorm/typeorm/raw/master/resources/logo_big.png" alt="typeORMIcon" style="width:350px;"/>
-
-<div style="font-family: 'Helvetica', 'Arial', sans-serif;font-size: 5em;font-weight: bold;text-align: center;line-height:180px;margin-left: 10px;margin-right:50px">X</div>
-
-  <img src="https://camo.githubusercontent.com/ae2d3fcc0b0c36eb32f4e22c8cba9a2edb36e2d606860c008ca285b76c2dd3f4/68747470733a2f2f7261772e6769746875622e636f6d2f616374696f6e6865726f2f616374696f6e6865726f2f6d61737465722f7075626c69632f6c6f676f2f616374696f6e6865726f2d736d616c6c2e706e67" alt="actionheroIcon" style="width:200px;"/>
+<div align="center">
+  <img width="350" src="https://github.com/typeorm/typeorm/raw/master/resources/logo_big.png" alt="typeORM icon">
+  <img width="140" height="140" src="https://i.ibb.co/z4LWF9m/image.png" alt="x cross">
+  <img width="170" src="https://raw.github.com/actionhero/actionhero/master/public/logo/actionhero-small.png" alt="actionhero icon">
 </div>
 
 The plugin connects [TypeORM](https://typeorm.io/#/) and [Actionhero](https://www.actionherojs.com).
