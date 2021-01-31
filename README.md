@@ -1,9 +1,9 @@
 # ah-typeorm-plugin
 
 <div align="center">
-  <img width="350" src="https://github.com/typeorm/typeorm/raw/master/resources/logo_big.png" alt="typeORM icon">
-  <img width="140" height="140" src="https://i.ibb.co/z4LWF9m/image.png" alt="x cross">
-  <img width="170" src="https://raw.github.com/actionhero/actionhero/master/public/logo/actionhero-small.png" alt="actionhero icon">
+  <img width="400" src="https://github.com/typeorm/typeorm/raw/master/resources/logo_big.png" alt="typeORM icon">
+  <img width="180" height="180" src="https://i.ibb.co/z4LWF9m/image.png" alt="x cross">
+  <img width="190" src="https://www.actionherojs.com/static/press-assets/logo.png" alt="actionhero icon">
 </div>
 
 The plugin connects [TypeORM](https://typeorm.io/#/) and [Actionhero](https://www.actionherojs.com).

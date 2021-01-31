@@ -11,8 +11,15 @@
     "lint": "prettier --check src __tests__",
     "build": "tsc --declaration"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/WaBLin123/ah-typeorm-plugin.git"
+  },
   "keywords": [
-    "actionhero"
+    "actionhero",
+    "ah",
+    "typeorm",
+    "plugin"
   ],
   "license": "ISC",
   "devDependencies": {
