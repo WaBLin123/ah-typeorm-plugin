@@ -1,5 +1,4 @@
 import { ConnectionOptions } from "typeorm";
-import { PluginLogger } from "../utils/pluginLogger";
 
 interface ActionheroConfigOption {
   _toExpand?: boolean;

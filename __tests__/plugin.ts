@@ -26,27 +26,31 @@ describe("ah-typeorm-plugin", () => {
     expect(env).toBe("test");
   });
 
-  test("can insert row", async () => {
-    const repo = api.typeORM.connection.getRepository(User);
+  test.skip("if config 'typeorm' autoCreateDB is enabled, plugin should create database when database not exist", async () => {});
+
+  test.skip("plugin logger lever should follow config 'typeorm' loggingLevels", async () => {});
+
+  test("api.typeORM.connection can be used normally", async () => {
+    const userRepo = api.typeORM.connection.getRepository(User);
     const user = new User();
     user.name = "BenWang";
-    await repo.save(user);
+    await userRepo.save(user);
 
-    const insertedUser = await repo.findOne({ name: "BenWang" });
+    const insertedUser = await userRepo.findOne({ where: { name: "BenWang" } });
     expect(insertedUser).not.toBeUndefined();
     expect(insertedUser?.name).toEqual("BenWang");
-  });
 
-  test("can update row", async () => {
-    const repo = api.typeORM.connection.getRepository(User);
-    const user = await repo.findOne({ name: "BenWang" });
-    expect(user).not.toBeUndefined();
+    const postRepo = api.typeORM.connection.getRepository(Post);
+    const post = new Post();
+    post.title = "Hello World!!";
+    post.text = "First Post";
+    post.user = user;
+    await postRepo.save(post);
 
-    const result = await repo.update({ name: "BenWang" }, { name: "Ben" });
-    expect(result.affected).toEqual(1);
-
-    const updatedUser = await repo.findOne({ name: "Ben" });
-    expect(updatedUser).not.toBeUndefined();
-    expect(updatedUser?.name).toEqual("Ben");
+    const insertedPost = await postRepo.findOne({
+      where: { title: "Hello World!!" },
+    });
+    expect(insertedPost).not.toBeUndefined();
+    expect(insertedPost?.text).toEqual("First Post");
   });
 });

@@ -15,7 +15,7 @@ export class Post1611847699011 implements MigrationInterface {
           },
           { name: "title", type: "varchar", isNullable: false },
           { name: "text", type: "varchar", isNullable: false },
-          { name: "userId", type: "int", isNullable: false },
+          { name: "userID", type: "int", isNullable: false },
           {
             name: "createdAt",
             type: "timestamp",
@@ -24,10 +24,9 @@ export class Post1611847699011 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            columnNames: ["userId"],
+            columnNames: ["userID"],
             referencedColumnNames: ["id"],
             referencedTableName: "User",
-            onDelete: "CASCADE",
           },
         ],
       })

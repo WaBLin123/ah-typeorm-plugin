@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -18,7 +19,12 @@ export class Post {
   @Column("varchar", { nullable: false })
   text!: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, (user) => user.id, {
+    cascade: true,
+  })
+  @JoinColumn({
+    name: "userID",
+  })
   user!: User;
 
   @CreateDateColumn()
