@@ -12,9 +12,18 @@ The plugin connects [TypeORM](https://typeorm.io/#/) and [Actionhero](https://ww
 
 ---
 
-- Create "default" connection by config and append to actionhero `api.typeorm.connection`
+- Create "default" connection by config and append to `api.typeorm.connection` in actionhero
 - Integrate [Actionhero logger](https://www.actionherojs.com/tutorials/logging) and [TypeORM logger](https://typeorm.io/#/logging).
 - Create database when database does not exist. (only support specific databases ex: MySQL SQLServer Oracle MariaDB.....)
+
+## Compatible
+
+---
+
+| module     | version    |
+| ---------- | ---------- |
+| actionhero | `v23.0.0+` |
+| typeORM    | `v0.2.30+` |
 
 ## Setup
 
@@ -127,7 +136,9 @@ The plugin connects [TypeORM](https://typeorm.io/#/) and [Actionhero](https://ww
 
 ---
 
-A `./src/config/typeorm.ts` will need to be created for your project.
+A `./src/config/typeorm.ts` will need to be created for your project. The config contain [TypeORM connection option](https://typeorm.io/#/connection-options) and ah-typeorm-plugin custom config, also you can freely modify **typeORM connection option** in the config.
+
+Actionhero will refer the config to connection database and do plugin custom method at [initializer](https://www.actionherojs.com/tutorials/initializers)
 
 ```typescript
 import { ConnectionOptions } from "typeorm";
@@ -287,6 +298,44 @@ export class User1611847407518 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable("User");
+  }
+}
+```
+
+## Use in Actionhero
+
+You can use `api.typeorm.connection` or create connection by yourself in [Action](https://www.actionherojs.com/tutorials/actions), [Task](https://www.actionherojs.com/tutorials/initializers), [Initializer](https://www.actionherojs.com/tutorials/initializers), etc...
+
+An example use connection in action:
+
+```typescript
+// `./src/action/createUser.ts`
+// actionhero v23 action version, v24 or v25 action version please visit: https://www.actionherojs.com/tutorials/actions
+import { Action, log, ActionProcessor } from "actionhero";
+import { User } from "./../entity/User.ts";
+
+export class createUser extends Action {
+  constructor() {
+    super();
+    this.name = "createUser";
+    this.description = "create a new user";
+    this.outputExample = {
+      result: true,
+    };
+    this.inputs = {
+      name: { required: true },
+    };
+  }
+
+  async run(data: ActionProcessor): Promise<{ result: boolean }> {
+    const { params, response } = data;
+    const { name } = params;
+
+    const repo = api.typeORM.connection.getRepository(User);
+    const user = new User();
+    user.name = name;
+    const instance = await repo.save(user);
+    return { result: !!instance };
   }
 }
 ```
