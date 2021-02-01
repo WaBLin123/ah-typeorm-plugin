@@ -335,7 +335,7 @@ export class createUser extends Action {
     const user = new User();
     user.name = name;
     const instance = await repo.save(user);
-    return { result: !!instance };
+    response.result = !!instance;
   }
 }
 ```
