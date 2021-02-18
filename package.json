@@ -38,7 +38,9 @@
     "typeorm": "^0.2.30",
     "typescript": "^4.1.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "actionhero": "^23.0.1"
+  },
   "jest": {
     "testEnvironment": "node",
     "transform": {
