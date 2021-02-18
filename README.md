@@ -327,7 +327,7 @@ export class createUser extends Action {
     };
   }
 
-  async run(data: ActionProcessor): Promise<{ result: boolean }> {
+  async run(data: ActionProcessor): Promise<void> {
     const { params, response } = data;
     const { name } = params;
 
