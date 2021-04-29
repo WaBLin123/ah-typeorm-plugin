@@ -15,6 +15,10 @@ type AhLoggingLevel =
   | "debug";
 interface PluginOption {
   autoCreateDB: boolean;
+  autoCreateDBOptions: {
+    charset: string;
+    collate: string;
+  },
   loggingLevels: {
     logQuery: AhLoggingLevel;
     logQueryError: AhLoggingLevel;
@@ -59,6 +63,11 @@ export const DEFAULT = {
       // should create database when database does not exist
       // only support specific databases ex: MySQL SQLServer Oracle MariaDB
       autoCreateDB: true,
+      // only support mysql
+      autoCreateDBOptions: {
+        charset: "utf8mb4",
+        collate: "utf8mb4_bin",
+      },
       // plugin default logger's logging level
       loggingLevels: {
         logQuery: "debug",
