@@ -1,6 +1,6 @@
 {
   "name": "ah-typeorm-plugin",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Ben Wang",
   "description": "Use TypeORM in Actionhero",
   "main": "index.js",
