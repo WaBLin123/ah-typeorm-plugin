@@ -43,8 +43,14 @@ export class TypeORMInitializer extends Initializer {
       username: config.typeorm.username,
       password: config.typeorm.password,
     });
-    const queryRunner = connection.createQueryRunner();
-    await queryRunner.createDatabase(dbName, true);
+
+    if (config.typeorm.type === "mysql") {
+      await connection.manager.query(`CREATE DATABASE IF NOT EXISTS ${dbName} CHARACTER SET ${config.typeorm.autoCreateDBOptions.charset} COLLATE ${config.typeorm.autoCreateDBOptions.collate};`)
+    } else {
+      const queryRunner = connection.createQueryRunner();
+      await queryRunner.createDatabase(dbName, true);
+    }
+
     await connection.close();
   }
 
