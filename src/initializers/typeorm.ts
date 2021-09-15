@@ -66,6 +66,8 @@ export class TypeORMInitializer extends Initializer {
       sql = "SELECT 1 FROM DUAL";
     }
     const queryRunner = api.typeORM.connection.createQueryRunner();
-    await queryRunner.query(sql);
+    if (dialect !== "mongodb") {
+      await queryRunner.query(sql);
+    }
   }
 }
