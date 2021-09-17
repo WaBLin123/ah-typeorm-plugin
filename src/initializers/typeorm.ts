@@ -45,7 +45,9 @@ export class TypeORMInitializer extends Initializer {
     });
 
     if (config.typeorm.type === "mysql") {
-      await connection.manager.query(`CREATE DATABASE IF NOT EXISTS ${dbName} CHARACTER SET ${config.typeorm.autoCreateDBOptions.charset} COLLATE ${config.typeorm.autoCreateDBOptions.collate};`)
+      await connection.manager.query(
+        `CREATE DATABASE IF NOT EXISTS ${dbName} CHARACTER SET ${config.typeorm.autoCreateDBOptions.charset} COLLATE ${config.typeorm.autoCreateDBOptions.collate};`
+      );
     } else {
       const queryRunner = connection.createQueryRunner();
       await queryRunner.createDatabase(dbName, true);
@@ -65,7 +67,10 @@ export class TypeORMInitializer extends Initializer {
     if (dialect === "oracle") {
       sql = "SELECT 1 FROM DUAL";
     }
-    const queryRunner = api.typeORM.connection.createQueryRunner();
-    await queryRunner.query(sql);
+    // should not run sql when sql is empty string(dialect is other database)
+    if (sql) {
+      const queryRunner = api.typeORM.connection.createQueryRunner();
+      await queryRunner.query(sql);
+    }
   }
 }
