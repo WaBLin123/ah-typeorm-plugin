@@ -24,10 +24,10 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
-      - uses: Borales/actions-yarn@v2.3.0
+      - uses: Borales/actions-yarn@v3.0.0
         with:
           cmd: install
-      - uses: Borales/actions-yarn@v2.3.0
+      - uses: Borales/actions-yarn@v3.0.0
         with:
           cmd: build
       - run: npm publish
